@@ -200,70 +200,132 @@ public abstract class CPTADataProviderProcessor<T extends CPTADataRetriever> ext
     }
     
     
-    protected List<CPTAInstrumentSymbology> getInstruments(JsonObject request)
+    protected List<CPTAInstrumentSymbology> getInstruments(JsonObject request) throws CPTAException
     {
-        // Should check that the json is properly formed at each stage otherwise throw an exception
-        // Get the rics from the request, it is an array of json objects of instrument symbologies
-        JsonArray ricsAsArray = request.getJsonArray(CPTADataProviderAPIConstants.INSTRUMENTS_ARRAY_NAME);  
         // Convert this list of rics to a list of symbols with type as rics
         List<CPTAInstrumentSymbology> instruments = new ArrayList<>();
-        // Get the list so we iterate easily over it
-        List<JsonObject> instrumentsAsJsonObjects = ricsAsArray.getValuesAs(JsonObject.class);        
-        for(JsonObject currentInstrument: instrumentsAsJsonObjects)
+        
+        // Should check that the json is properly formed at each stage otherwise throw an exception
+        try
         {
-            // Create a symbology entry for this ric
-            CPTAInstrumentSymbology currentInstrumentSymbology = new CPTAInstrumentSymbology();
-            // get id
-            String id = currentInstrument.getString(CPTAInstrumentConstants.ID_FIELD_NAME);            
-            currentInstrumentSymbology.setID(id);
-            // get id type
-            String idType = currentInstrument.getString(CPTAInstrumentConstants.ID_SOURCE_FIELD_NAME);
-            currentInstrumentSymbology.setIDSource(idType);
-            // Add to list of instruments
-            instruments.add(currentInstrumentSymbology);
+            // Get the rics from the request, it is an array of json objects of instrument symbologies
+            JsonArray instrumentsAsArray = request.getJsonArray(CPTADataProviderAPIConstants.INSTRUMENTS_ARRAY_NAME); 
+            // If there are no instruments
+            if(null == instrumentsAsArray)
+            {
+                List<String> errors = new ArrayList<>();
+                errors.add("There are no instruments in this request");
+                CPTAException e = new CPTAException(errors);
+                throw e;                
+            }
+
+            // Get the list so we iterate easily over it
+            List<JsonObject> instrumentsAsJsonObjects = instrumentsAsArray.getValuesAs(JsonObject.class);        
+            for(JsonObject currentInstrument: instrumentsAsJsonObjects)
+            {
+                // Create a symbology entry for this ric
+                CPTAInstrumentSymbology currentInstrumentSymbology = new CPTAInstrumentSymbology();
+                // get id
+
+                String id = currentInstrument.getString(CPTAInstrumentConstants.ID_FIELD_NAME);     
+                currentInstrumentSymbology.setID(id);
+                // get id type
+                String idType = currentInstrument.getString(CPTAInstrumentConstants.ID_SOURCE_FIELD_NAME);
+                currentInstrumentSymbology.setIDSource(idType);
+                // Add to list of instruments
+                instruments.add(currentInstrumentSymbology);
+            }        
+        }
+        catch(NullPointerException ne)
+        {
+            List<String> errors = new ArrayList<>();
+            errors.add("one of the instruments has an invalid format, each instrument should be json object with 'Identifier' and 'IdentifierType' fields");
+            CPTAException e = new CPTAException(errors);
+            throw e;
         }
         
         // Return the list
         return instruments;
     }
     
-    protected List<CPTADataField> getRequestFields(JsonObject request)
+    protected List<CPTADataField> getRequestFields(JsonObject request) throws CPTAException
     {
-        // Get the fields from the request, it is an array of json objects representing the request fields
-        JsonArray fieldsAsArray = request.getJsonArray(CPTADataProviderAPIConstants.FIELDS_ARRAY_NAME);
         // need to convert this from a json array of json objects to a list of fields
         List<CPTADataField> fields = new ArrayList<>();
-        // Get the json array as a list so we can iterate over it
-        List<JsonObject> fieldsAsJsonObjects = fieldsAsArray.getValuesAs(JsonObject.class);
-        for( JsonObject currentRequestFieldObject: fieldsAsJsonObjects)
+
+        // Should check that the json is properly formed at each stage otherwise throw an exception
+        try
         {
-            // Turns the json object into a list of fields with name and message type
-            CPTADataField currentField = new CPTADataField();
-            currentField.messageType = currentRequestFieldObject.getString(CPTADataProviderAPIConstants.MESSAGE_TYPE_FIELD_NAME);
-            currentField.name = currentRequestFieldObject.getString(CPTADataProviderAPIConstants.FIELD_NAME_FIELD_NAME);
-            // Add it to list
-            fields.add(currentField);
+            // Get the fields from the request, it is an array of json objects representing the request fields
+            JsonArray fieldsAsArray = request.getJsonArray(CPTADataProviderAPIConstants.FIELDS_ARRAY_NAME);
+            // If there are no fields
+            if(null == fieldsAsArray)
+            {
+                List<String> errors = new ArrayList<>();
+                errors.add("There are no fields in this request");
+                CPTAException e = new CPTAException(errors);
+                throw e;                
+            }
+
+            // Get the json array as a list so we can iterate over it
+            List<JsonObject> fieldsAsJsonObjects = fieldsAsArray.getValuesAs(JsonObject.class);
+            for( JsonObject currentRequestFieldObject: fieldsAsJsonObjects)
+            {
+                // Turns the json object into a list of fields with name and message type
+                CPTADataField currentField = new CPTADataField();
+                currentField.messageType = currentRequestFieldObject.getString(CPTADataProviderAPIConstants.MESSAGE_TYPE_FIELD_NAME);
+                currentField.name = currentRequestFieldObject.getString(CPTADataProviderAPIConstants.FIELD_NAME_FIELD_NAME);
+                // Add it to list
+                fields.add(currentField);
+            }
+        }
+        catch(NullPointerException ne)
+        {
+            List<String> errors = new ArrayList<>();
+            errors.add("one of the fields has an invalid format, each field should be json object with 'name' and 'type' fields");
+            CPTAException e = new CPTAException(errors);
+            throw e;
         }
         
         return fields;
     }
     
-    protected List<CPTADataProperty> getRequestProperties(JsonObject request)
+    protected List<CPTADataProperty> getRequestProperties(JsonObject request) throws CPTAException
     {
-        // Get the properties from the request, it is an array of json objects representing the request fields
-        JsonArray propertiesAsArray = request.getJsonArray(CPTADataProviderAPIConstants.PROPERTIES_ARRAY_NAME);
         // need to convert this from a json array of json objects to a list of properties
         List<CPTADataProperty> properties = new ArrayList<>();
-        // Get the json array as a list so we can iterate over it
-        List<JsonObject> propertiesAsJsonObjects = propertiesAsArray.getValuesAs(JsonObject.class);
-        for( JsonObject currentRequestPropertyObject: propertiesAsJsonObjects)
+
+        try
         {
-            // Turns the json object into a list of properties with name and value
-            CPTADataProperty currentProperty = new CPTADataProperty();
-            currentProperty.name = currentRequestPropertyObject.getString(CPTADataProviderAPIConstants.PROPERTY_NAME_FIELD_NAME);
-            currentProperty.value = currentRequestPropertyObject.getString(CPTADataProviderAPIConstants.PROPERTY_VALUE_FIELD_NAME);
-            // Add it to list
-            properties.add(currentProperty);
+            // Get the properties from the request, it is an array of json objects representing the request fields
+            JsonArray propertiesAsArray = request.getJsonArray(CPTADataProviderAPIConstants.PROPERTIES_ARRAY_NAME);
+            // If there are no fields
+            if(null == propertiesAsArray)
+            {
+                List<String> errors = new ArrayList<>();
+                errors.add("There is no properties array in this request, to specify no properties use the empty array '[]'");
+                CPTAException e = new CPTAException(errors);
+                throw e;                
+            }
+
+            // Get the json array as a list so we can iterate over it
+            List<JsonObject> propertiesAsJsonObjects = propertiesAsArray.getValuesAs(JsonObject.class);
+            for( JsonObject currentRequestPropertyObject: propertiesAsJsonObjects)
+            {
+                // Turns the json object into a list of properties with name and value
+                CPTADataProperty currentProperty = new CPTADataProperty();
+                currentProperty.name = currentRequestPropertyObject.getString(CPTADataProviderAPIConstants.PROPERTY_NAME_FIELD_NAME);
+                currentProperty.value = currentRequestPropertyObject.getString(CPTADataProviderAPIConstants.PROPERTY_VALUE_FIELD_NAME);
+                // Add it to list
+                properties.add(currentProperty);
+            }
+        }
+        catch(NullPointerException ne)
+        {
+            List<String> errors = new ArrayList<>();
+            errors.add("one of the properties has an invalid format, each property should be json object with 'name' and 'value' fields");
+            CPTAException e = new CPTAException(errors);
+            throw e;
         }
         
         return properties;
