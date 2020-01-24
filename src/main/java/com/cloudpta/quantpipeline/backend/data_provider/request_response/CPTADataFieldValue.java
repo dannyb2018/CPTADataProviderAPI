@@ -25,5 +25,7 @@ package com.cloudpta.quantpipeline.backend.data_provider.request_response;
  */
 public class CPTADataFieldValue
 {
-    
+    public String name;
+    public String value;
+    public String date;
 }
