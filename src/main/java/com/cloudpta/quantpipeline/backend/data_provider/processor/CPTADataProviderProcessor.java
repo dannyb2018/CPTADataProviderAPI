@@ -19,7 +19,7 @@ limitations under the License.
 */
 package com.cloudpta.quantpipeline.backend.data_provider.processor;
 
-import com.cloudpta.quantpipeline.api.instrument.CPTAInstrumentConstants;
+import com.cloudpta.quantpipeline.api.instrument.symbology.CPTAInstrumentDatabaseConstants;
 import com.cloudpta.quantpipeline.api.instrument.symbology.CPTAInstrumentSymbology;
 import com.cloudpta.quantpipeline.backend.data_provider.request_response.CPTADataField;
 import com.cloudpta.quantpipeline.backend.data_provider.request_response.CPTADataRetriever;
@@ -227,10 +227,10 @@ public abstract class CPTADataProviderProcessor<T extends CPTADataRetriever> ext
                 CPTAInstrumentSymbology currentInstrumentSymbology = new CPTAInstrumentSymbology();
                 // get id
 
-                String id = currentInstrument.getString(CPTAInstrumentConstants.ID_FIELD_NAME);     
+                String id = currentInstrument.getString(CPTAInstrumentDatabaseConstants.INSTRUMENT_ID_FIELD_NAME);     
                 currentInstrumentSymbology.setID(id);
                 // get id type
-                String idType = currentInstrument.getString(CPTAInstrumentConstants.ID_SOURCE_FIELD_NAME);
+                String idType = currentInstrument.getString(CPTAInstrumentDatabaseConstants.INSTRUMENT_ID_SOURCE_FIELD_NAME);
                 currentInstrumentSymbology.setIDSource(idType);
                 // Add to list of instruments
                 instruments.add(currentInstrumentSymbology);
