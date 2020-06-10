@@ -119,12 +119,12 @@ public class CPTADataRetriever
     }
     
     protected CPTADataMessage getMessageByType
-                                                  (
-                                                  String messageType
-                                                  ) 
-                                                  throws 
-                                                  InstantiationException, 
-                                                  IllegalAccessException
+                                             (
+                                             String messageType
+                                             ) 
+                                             throws 
+                                             InstantiationException, 
+                                             IllegalAccessException
     {
         // Get class
         Class messageClassForThisType = typeToMessageClassMap.get(messageType);
