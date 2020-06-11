@@ -25,8 +25,8 @@ package com.cloudpta.quantpipeline.backend.data_provider.processor;
  */
 public interface CPTADataProviderAPIConstants
 {
-    public static final String RELATIONSHIP_NAME_SUCCESS = "Success";
-    public static final String RELATIONSHIP_NAME_FAILURE = "Failure";
+    public static final String RELATIONSHIP_NAME_SUCCESS = "success";
+    public static final String RELATIONSHIP_NAME_FAILURE = "failure";
     
 
     public static final String CPTA_START_DATE_PROPERTY = "start";
