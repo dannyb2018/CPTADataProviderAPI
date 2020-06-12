@@ -52,52 +52,52 @@ import org.junit.jupiter.api.Test;
 public class CPTADataProviderProcessorTest
 {
     /**
-     * Test of setUpDataRetriever method, of class CPTADataProviderProcessor.
+     * Test of setUpDataRetriever method, of class GetFinanceData.
      */
     @Test
     public void testSetUpDataRetriever()
     {
         System.out.println("setUpDataRetriever");
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         instance.setUpDataRetriever();
     }
 
     /**
-     * Test of addProperties method, of class CPTADataProviderProcessor.
+     * Test of addProperties method, of class GetFinanceData.
      */
     @Test
     public void testAddProperties()
     {
         System.out.println("addProperties");
         List<PropertyDescriptor> thisInstanceDescriptors = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         instance.addProperties(thisInstanceDescriptors);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of init method, of class CPTADataProviderProcessor.
+     * Test of init method, of class GetFinanceData.
      */
     @Test
     public void testInit()
     {
         System.out.println("init");
         ProcessorInitializationContext context = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         instance.init(context);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getRelationships method, of class CPTADataProviderProcessor.
+     * Test of getRelationships method, of class GetFinanceData.
      */
     @Test
     public void testGetRelationships()
     {
         System.out.println("getRelationships");
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         Set<Relationship> expResult = null;
         Set<Relationship> result = instance.getRelationships();
         assertEquals(expResult, result);
@@ -106,13 +106,13 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of getSupportedPropertyDescriptors method, of class CPTADataProviderProcessor.
+     * Test of getSupportedPropertyDescriptors method, of class GetFinanceData.
      */
     @Test
     public void testGetSupportedPropertyDescriptors()
     {
         System.out.println("getSupportedPropertyDescriptors");
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         List<PropertyDescriptor> expResult = null;
         List<PropertyDescriptor> result = instance.getSupportedPropertyDescriptors();
         assertEquals(expResult, result);
@@ -121,18 +121,18 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of onScheduled method, of class CPTADataProviderProcessor.
+     * Test of onScheduled method, of class GetFinanceData.
      */
     @Test
     public void testOnScheduled()
     {
         System.out.println("onScheduled");
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         System.out.println("OnScheduled not implemented, not sure what it does");
     }
 
     /**
-     * Test of onPropertyModified method, of class CPTADataProviderProcessor.
+     * Test of onPropertyModified method, of class GetFinanceData.
      */
     @Test
     public void testOnPropertyModified()
@@ -141,14 +141,14 @@ public class CPTADataProviderProcessorTest
         PropertyDescriptor descriptor = null;
         String oldValue = "";
         String newValue = "";
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         instance.onPropertyModified(descriptor, oldValue, newValue);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of onTrigger method, of class CPTADataProviderProcessor.
+     * Test of onTrigger method, of class GetFinanceData.
      */
     @Test
     public void testOnTrigger()
@@ -158,7 +158,7 @@ public class CPTADataProviderProcessorTest
         String emptyRequestString = "{\""+ CPTADataProviderAPIConstants.INSTRUMENTS_ARRAY_NAME + "\":[], \""+ CPTADataProviderAPIConstants.FIELDS_ARRAY_NAME + "\":[], \""+ CPTADataProviderAPIConstants.PROPERTIES_ARRAY_NAME + "\":[]}";
         InputStream content = new ByteArrayInputStream(emptyRequestString.getBytes());
 
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
 
         // Generate a test runner to mock a processor in a flow
         TestRunner runner = TestRunners.newTestRunner(instance);
@@ -184,14 +184,14 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of getInstruments method, of class CPTADataProviderProcessor.
+     * Test of getInstruments method, of class GetFinanceData.
      */
     @Test
     public void testGetInstruments() throws Exception
     {
         System.out.println("getInstruments");
         JsonObject request = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         List<CPTAInstrumentSymbology> expResult = null;
         List<CPTAInstrumentSymbology> result = instance.getInstruments(request);
         assertEquals(expResult, result);
@@ -200,14 +200,14 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of getRequestFields method, of class CPTADataProviderProcessor.
+     * Test of getRequestFields method, of class GetFinanceData.
      */
     @Test
     public void testGetRequestFields() throws Exception
     {
         System.out.println("getRequestFields");
         JsonObject request = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         List<CPTADataField> expResult = null;
         List<CPTADataField> result = instance.getRequestFields(request);
         assertEquals(expResult, result);
@@ -216,14 +216,14 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of getRequestProperties method, of class CPTADataProviderProcessor.
+     * Test of getRequestProperties method, of class GetFinanceData.
      */
     @Test
     public void testGetRequestProperties() throws Exception
     {
         System.out.println("getRequestProperties");
         JsonObject request = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         List<CPTADataProperty> expResult = null;
         List<CPTADataProperty> result = instance.getRequestProperties(request);
         assertEquals(expResult, result);
@@ -232,7 +232,7 @@ public class CPTADataProviderProcessorTest
     }
 
     /**
-     * Test of getData method, of class CPTADataProviderProcessor.
+     * Test of getData method, of class GetFinanceData.
      */
     @Test
     public void testGetData() throws Exception
@@ -242,7 +242,7 @@ public class CPTADataProviderProcessorTest
         List<CPTAInstrumentSymbology> symbols = null;
         List<CPTADataField> fields = null;
         List<CPTADataProperty> properties = null;
-        CPTADataProviderProcessor instance = new CPTADummyProcessor();
+        GetFinanceData instance = new CPTADummyProcessor();
         String expResult = "";
         String result = instance.getData(context, symbols, fields, properties);
         assertEquals(expResult, result);
@@ -250,7 +250,7 @@ public class CPTADataProviderProcessorTest
         fail("The test case is a prototype.");
     }
 
-    public class CPTADummyProcessor extends CPTADataProviderProcessor<CPTADataRetriever>
+    public class CPTADummyProcessor extends GetFinanceData<CPTADataRetriever>
     {
         @Override
         public void setUpDataRetriever()
