@@ -22,7 +22,7 @@ package com.cloudpta.quantpipeline.backend.data_provider.request_response;
 import com.cloudpta.quantpipeline.api.instrument.symbology.CPTAInstrumentSymbology;
 import com.cloudpta.utilites.exceptions.CPTAException;
 import java.util.List;
-import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.processor.ProcessContext;
 
@@ -32,14 +32,15 @@ import org.apache.nifi.processor.ProcessContext;
  */
 public abstract class CPTADataMessage
 {
-    public abstract JsonArray getResult
-                                      (
-                                      ComponentLog logger,
-                                      ProcessContext context,        
-                                      List<CPTAInstrumentSymbology> symbols, 
-                                      List<String> fields, 
-                                      List<CPTADataProperty> properties
-                                      )  throws CPTAException;
+    public abstract void getResult
+                                 (
+                                 ComponentLog logger,
+                                 ProcessContext context,    
+                                 JsonArrayBuilder responses,
+                                 List<CPTAInstrumentSymbology> symbols, 
+                                 List<String> fields, 
+                                 List<CPTADataProperty> properties
+                                 )  throws CPTAException;
                                        
     public abstract String getMessageType();
     
