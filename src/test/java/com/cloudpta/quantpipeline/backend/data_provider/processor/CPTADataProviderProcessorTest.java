@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.logging.ComponentLog;
@@ -274,7 +275,7 @@ public class CPTADataProviderProcessorTest
     public class CPTADummyDataMessage extends CPTADataMessage
     {
         @Override
-        public JsonArray getResult(ComponentLog logger, ProcessContext context, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
+        public void getResult(ComponentLog logger, ProcessContext context, JsonArrayBuilder responses, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
