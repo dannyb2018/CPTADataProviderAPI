@@ -52,7 +52,7 @@ public class CPTADataRetriever
         // Get the list of message types along with the fields for each message type
         HashMap<String,List<String>> mappedFields = getMappedFields(fields);
         
-        List<JsonArray> responses = new ArrayList<>();
+        JsonArrayBuilder responses = Json.createArrayBuilder();
         Set<String> messagesTypesToQuery = mappedFields.keySet();
         // Go through the list of message types
         for(String currentMessageType : messagesTypesToQuery )
@@ -64,17 +64,16 @@ public class CPTADataRetriever
             {
                 CPTADataMessage message = getMessageByType(currentMessageType);
                 // For each message pass in the relevant request
-                // Get the data
-                JsonArray response = message.getResult
-                                                     (
-                                                     logger,
-                                                     context, 
-                                                     symbols, 
-                                                     fieldsForThisMessageType,
-                                                     properties
-                                                     );
-                // Add to list of responses
-                responses.add(response);
+                // Get the data which will be added to responses
+                message.getResult
+                                (
+                                logger,
+                                context, 
+                                responses,
+                                symbols, 
+                                fieldsForThisMessageType,
+                                properties
+                                );
             } 
             catch(CPTAException internalException)
             {
@@ -134,18 +133,10 @@ public class CPTADataRetriever
         return messageForThisType;
     }
                                                          
-    protected String createGlobalResponseFromList(List<JsonArray> responsesFromEachMessage)
-    {
-        // Merge the json objects
-        // they are all just arrays so just add them to one big array
-        JsonArrayBuilder globalResponse = Json.createArrayBuilder();
-        for( JsonArray currentResponse: responsesFromEachMessage)
-        {
-            globalResponse.add(currentResponse);
-        }
-        
+    protected String createGlobalResponseFromList(JsonArrayBuilder responsesFromEachMessage)
+    {        
         // Turn it into a string
-        String globalResponseAsString = globalResponse.build().toString();
+        String globalResponseAsString = responsesFromEachMessage.build().toString();
         // Return that string        
         return globalResponseAsString;
     }
