@@ -26,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.processor.ProcessContext;
 import static org.junit.Assert.assertEquals;
@@ -297,7 +299,7 @@ public class CPTADataRetrieverTest
     public void testCreateGlobalResponseFromList()
     {
         System.out.println("createGlobalResponseFromList");
-        List<JsonArray> responsesFromEachMessage = new ArrayList<>();
+        JsonArrayBuilder responsesFromEachMessage = Json.createArrayBuilder();
         // Set up the mapping of types to message classes
         HashMap<String, Class> mapping = new HashMap<>();
         mapping.put(CPTARandomTestDataMessage2.messageType, CPTARandomTestDataMessage2.class);
@@ -315,7 +317,7 @@ class CPTARandomTestDataMessage1 extends CPTADataMessage
 {
 
     @Override
-    public JsonArray getResult(ComponentLog logger, ProcessContext context, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
+    public void getResult(ComponentLog logger, ProcessContext context, JsonArrayBuilder responses, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -334,7 +336,7 @@ class CPTARandomTestDataMessage2 extends CPTADataMessage
 {
 
     @Override
-    public JsonArray getResult(ComponentLog logger, ProcessContext context, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
+    public void getResult(ComponentLog logger, ProcessContext context, JsonArrayBuilder responses, List<CPTAInstrumentSymbology> symbols, List<String> fields, List<CPTADataProperty> properties) throws CPTAException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
