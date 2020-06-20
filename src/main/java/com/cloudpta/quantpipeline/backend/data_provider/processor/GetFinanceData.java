@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
@@ -140,16 +141,16 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
                 catch(CPTAException internalException)
                 {
                     // Then there is an error
-                    String error = internalException.getErrorsAsString();
-                    results.set(error);
+                    JsonObject error = internalException.getErrors();
+                    results.set(error.toString());
                     statusOfQuery.set(FAILURE);
                 }
                 catch(Exception unexpectedException)
                 {
                     // There is another sort of error
                     CPTAException convertedException = new CPTAException(unexpectedException);
-                    String error = convertedException.getErrorsAsString();
-                    results.set(error);
+                    JsonObject error = convertedException.getErrors();
+                    results.set(error.toString());
                     statusOfQuery.set(FAILURE);                    
                 }
                 finally
@@ -213,9 +214,8 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
             // If there are no instruments
             if(null == instrumentsAsArray)
             {
-                List<String> errors = new ArrayList<>();
-                errors.add("There are no instruments in this request");
-                CPTAException e = new CPTAException(errors);
+                Exception createdException = new Exception("There are no instruments in this request");
+                CPTAException e = new CPTAException(createdException);
                 throw e;                
             }
 
@@ -238,9 +238,9 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
         }
         catch(NullPointerException ne)
         {
-            List<String> errors = new ArrayList<>();
-            errors.add("one of the instruments has an invalid format, each instrument should be json object with 'Identifier' and 'IdentifierType' fields");
-            CPTAException e = new CPTAException(errors);
+            Exception createdException = new Exception("one of the instruments has an invalid format, each instrument should be json object with 'Identifier' and 'IdentifierType' fields");
+            createdException.setStackTrace(ne.getStackTrace());
+            CPTAException e = new CPTAException(createdException);
             throw e;
         }
         
@@ -261,9 +261,8 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
             // If there are no fields
             if(null == fieldsAsArray)
             {
-                List<String> errors = new ArrayList<>();
-                errors.add("There are no fields in this request");
-                CPTAException e = new CPTAException(errors);
+                Exception createdException = new Exception("There are no fields in this request");
+                CPTAException e = new CPTAException(createdException);
                 throw e;                
             }
 
@@ -281,9 +280,9 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
         }
         catch(NullPointerException ne)
         {
-            List<String> errors = new ArrayList<>();
-            errors.add("one of the fields has an invalid format, each field should be json object with 'name' and 'type' fields");
-            CPTAException e = new CPTAException(errors);
+            Exception createdException = new Exception("one of the fields has an invalid format, each field should be json object with 'name' and 'type' fields");
+            createdException.setStackTrace(ne.getStackTrace());
+            CPTAException e = new CPTAException(createdException);
             throw e;
         }
         
@@ -302,9 +301,8 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
             // If there are no fields
             if(null == propertiesAsArray)
             {
-                List<String> errors = new ArrayList<>();
-                errors.add("There is no properties array in this request, to specify no properties use the empty array '[]'");
-                CPTAException e = new CPTAException(errors);
+                Exception createdException = new Exception("There is no properties array in this request, to specify no properties use the empty array '[]'");
+                CPTAException e = new CPTAException(createdException);
                 throw e;                
             }
 
@@ -322,9 +320,9 @@ public abstract class GetFinanceData<T extends CPTADataRetriever> extends Abstra
         }
         catch(NullPointerException ne)
         {
-            List<String> errors = new ArrayList<>();
-            errors.add("one of the properties has an invalid format, each property should be json object with 'name' and 'value' fields");
-            CPTAException e = new CPTAException(errors);
+            Exception createdException = new Exception("one of the properties has an invalid format, each property should be json object with 'name' and 'value' fields");
+            createdException.setStackTrace(ne.getStackTrace());
+            CPTAException e = new CPTAException(createdException);
             throw e;
         }
         
