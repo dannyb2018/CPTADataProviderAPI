@@ -25,14 +25,13 @@ import com.cloudpta.quantpipeline.backend.data_provider.request_response.CPTADat
 import com.cloudpta.quantpipeline.backend.data_provider.request_response.CPTADataProperty;
 import com.cloudpta.quantpipeline.backend.data_provider.request_response.CPTADataRetriever;
 import com.cloudpta.utilites.exceptions.CPTAException;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.processor.ProcessContext;
